@@ -1,0 +1,51 @@
+/* Query 1 */
+
+SELECT P.Name as Name, SUM(T.Milliseconds)/(1000*60) as Total_time_min
+FROM Playlist p
+JOIN PlaylistTrack pt
+ON pt.PlaylistId = p.PlaylistId
+JOIN Track T 
+ON pt.TrackId = T.TrackId
+GROUP by 1
+ORDER by 2 DESC
+
+
+/* Query 2 */
+
+SELECT GENRE.NAME GENRE, COUNT(TRACK.NAME) Tracks_count 
+FROM CUSTOMER 
+JOIN INVOICE  ON INVOICE.CUSTOMERID = CUSTOMER.CUSTOMERID
+JOIN INVOICELINE ON INVOICELINE.INVOICEID = INVOICE.INVOICEID
+JOIN TRACK ON TRACK.TRACKID = INVOICELINE.TRACKID
+JOIN GENRE ON GENRE.GENREID = TRACK.GENREID
+GROUP BY 1
+ORDER BY 2 DESC
+
+
+
+/* Query 3 */
+
+SELECT CUSTOMER.FirstName, SUM(INVOICE.TOTAL) AS Total
+FROM INVOICE
+JOIN CUSTOMER ON CUSTOMER.CUSTOMERID = INVOICE.CUSTOMERID
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 10;
+
+
+
+
+/* Query 4 */
+
+SELECT  Album.title, SUM(InvoiceLine.quantity) AS Quantity
+FROM Artist
+JOIN Album
+ON Artist.artistid = Album.artistid
+JOIN Track
+ON Album.albumid = Track.albumid
+JOIN InvoiceLine
+ON InvoiceLine.trackid = Track.trackid
+GROUP BY Album.albumid
+ORDER BY 2 DESC
+LIMIT 10;
+
